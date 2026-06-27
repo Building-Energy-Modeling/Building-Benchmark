@@ -36,3 +36,17 @@ This repository presents over 10 widely used building information datasets. Some
 | SineND      | continuous     | N         | -                  | -           | 
 | Spiral2D    | continuous     | 2         | -                  | 2           | 
 | Stocks      | 1 day          | 6         | -                  | -           | 
+
+## 📎 Citation
+If you enjoy or benefit from using `GenTS`, a citation to this repository will be greatly appreciated！
+```BibTeX
+@misc{Building-Benchmark,
+  author = {Author Name},
+  title = {Repository Title},
+  year = {2024},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/Building-Energy-Modeling/Building-Benchmark}},
+  note = {Accessed: 2026-06-27}
+}
+```
