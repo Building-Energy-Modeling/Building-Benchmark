@@ -33,9 +33,8 @@ This repository presents over 10 widely used building information datasets. Some
 
 | 🤖Name        | 🧭 Resolution     | 📦 Dimension |⭕️ Missing value      | 🏷️ Class label |
 | ----------- | -------------- | --------- | ------------------ | ----------- | 
-| SineND      | continuous     | N         | -                  | -           | 
-| Spiral2D    | continuous     | 2         | -                  | 2           | 
-| Stocks      | 1 day          | 6         | -                  | -           | 
+| EnergyPlus     | continuous     | N         | -                  | -           | 
+|    | continuous     | 2         | -                  | 2           | 
 
 ## 📎 Citation
 If you enjoy or benefit from using `GenTS`, a citation to this repository will be greatly appreciated！
