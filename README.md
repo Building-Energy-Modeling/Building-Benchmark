@@ -33,11 +33,43 @@ This repository presents over 10 widely used building information datasets. Some
 
 | 🤖Name        | 🧭 Resolution     | 📦 Dimension |⭕️ Missing value      | 🏷️ Class label |
 | ----------- | -------------- | --------- | ------------------ | ----------- | 
-| EnergyPlus     | continuous     | N         | -                  | -           | 
-|    | continuous     | 2         | -                  | 2           | 
+| EnergyPlus     |    | N         | -                  | -           | 
+|    |    | 2         | -                  | 2           | 
+
+## 🔍Verification Methods
+
+
+## 📊 Results
+We compared all the above-mentioned methods in multiple datasets, 
+
+Table I summarizes the numerical results on accuracies.
+
+**Table I. Accuracy results of different methods on multiple datasets.**
+| Method    |  Dataset 1   | Dataset 2 | Dataset 3     | Dataset 4 |
+| ----------- | ---------- | --------- | ------------- | --------- | 
+| method 1    |            | N         | -             | -         | 
+| method 2   |             | 2         | -             | 2         | 
+| method 3   |             | 2         | -             | 2         | 
+| method 4   |             | 2         | -             | 2         | 
+
+**Table II. Efficiency comparisons of different methods on multiple datasets.**
+| Method    |  Dataset 1   | Dataset 2 | Dataset 3     | Dataset 4 |
+| ----------- | ---------- | --------- | ------------- | --------- | 
+| method 1    |            | N         | -             | -         | 
+| method 2   |             | 2         | -             | 2         | 
+| method 3   |             | 2         | -             | 2         | 
+| method 4   |             | 2         | -             | 2         | 
+
+**Table III. Operational cost of different methods on multiple datasets.**
+| Method    |  Dataset 1   | Dataset 2 | Dataset 3     | Dataset 4 |
+| ----------- | ---------- | --------- | ------------- | --------- | 
+| method 1    |            | N         | -             | -         | 
+| method 2   |             | 2         | -             | 2         | 
+| method 3   |             | 2         | -             | 2         | 
+| method 4   |             | 2         | -             | 2         | 
 
 ## 📎 Citation
-If you enjoy or benefit from using `GenTS`, a citation to this repository will be greatly appreciated！
+If you enjoy or benefit from using `BEMS-sharing`, a citation to this repository will be greatly appreciated！
 ```BibTeX
 @misc{Building-Benchmark,
   author = {Author Name},
