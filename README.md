@@ -37,7 +37,7 @@ This repository presents over 10 widely used building information datasets. Some
 |    |    | 2         | -                  | 2           | 
 
 ## 🔍Verification Methods
-
+To comprehensively evaluate the effectiveness of the proposed methods, we conduct a standardized verification procedure across multiple building modeling datasets. The evaluation compares all candidate methods under consistent experimental settings and assesses their performance in terms of modeling accuracy, robustness, computational efficiency, and generalizability. Quantitative results are reported using predefined evaluation metrics, while qualitative examples are provided to illustrate the practical modeling performance of each method.
 
 ## 📊 Results
 We compared all the above-mentioned methods in multiple datasets, 
