@@ -1,12 +1,12 @@
 # Building thermal dynamics
 
-How quickly does a room cool after its heating turns off? How much can a building shift electricity use while keeping its occupants comfortable? This collection brings together 100 journal articles published from 2022 to 2026 that model these thermal responses. A study keeps the same number across the methods, datasets and results tables.
+This collection summarizes 100 journal articles published between 2022 and 2026 on building thermal dynamics and HVAC control. It covers modeling methods, datasets and evaluation results. A common study number links each entry to its reference.
 
 [Methods](#methods) · [Datasets](#datasets) · [Reported results](#reported-results) · [References](#references)
 
 ## Methods
 
-A two-resistance, two-capacitance model can describe how heat moves between the indoor air and the envelope of a home <a href="#ref-3">[3]</a>. Other studies model each room separately or train a model around the decisions an HVAC controller will make. The thermal quantity column identifies what each method is designed to estimate.
+This section summarizes the methods used to model building thermal dynamics. Each entry identifies the modeling approach, the thermal quantity or control task it addresses, and the main principle behind the method.
 
 | Method | Thermal quantity or task | Modeling idea |
 | --- | --- | --- |
@@ -111,13 +111,12 @@ A two-resistance, two-capacitance model can describe how heat moves between the 
 | <a href="#ref-99">[99]</a> Semidefinite flexibility optimization | Indoor and wall temperatures | Couple an RC building model to HVAC equipment and solve for feasible peak reductions |
 | <a href="#ref-100">[100]</a> Aggregate thermal regression | Building or cluster temperature | Map zone states to an aggregate state and fit a constrained regression by block updates |
 
-<sub>¹ MPC = model predictive control.</sub>
 
-<sub>² PCNN = physically consistent neural network.</sub>
 
 ## Datasets
 
-The Swiss NEST apartment provides measured bedroom temperatures <a href="#ref-4">[4]</a>, while the U.S. Department of Energy prototypes in <a href="#ref-2">[2]</a> provide simulated trajectories for 32 buildings. The evaluation setup shows which observations or scenarios each study used for testing, including the sampling interval or forecast horizon where reported.
+This section describes the measured and simulated data used in the studies. It summarizes the building type, data source and evaluation setup, including sampling intervals, training and test periods, and forecast horizons where reported.
+
 
 | Study | Building data | Evaluation setup |
 | --- | --- | --- |
@@ -224,13 +223,13 @@ The Swiss NEST apartment provides measured bedroom temperatures <a href="#ref-4"
 
 ## Reported results
 
-Forecast accuracy and control cost can favor different models. In the hotel case <a href="#ref-1">[1]</a>, the model trained for control had a higher temperature error than the model trained on prediction error, yet its controller achieved a lower daily cost than the open-loop comparison. Each table below uses the comparison from the same experiment. A dash marks a result presented without a separate comparator.
+This section organizes the reported results into six categories. Each entry presents an outcome together with its evaluation conditions, metric and within-study comparison where available.
 
 [Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Computation time](#computation-time) · [Qualitative findings](#qualitative-findings)
 
 ### Prediction accuracy
 
-The forecast horizon matters even for a single room. In the Swiss bedroom study <a href="#ref-4">[4]</a>, the resistance–capacitance model had the smaller error one hour ahead, while the physically consistent neural network had the smaller error three days ahead. Read each error alongside its forecast horizon and the temperature being predicted.
+This section summarizes prediction errors for indoor temperatures and related thermal quantities. Results are listed with the forecast horizon, error metric and comparison method where reported.
 
 | Study and case | Prediction metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -269,13 +268,11 @@ The forecast horizon matters even for a single room. In the Swiss bedroom study 
 | <a href="#ref-100">[100]</a> Multi-zone building | Aggregate-state RMSE (°C) | &lt;0.72 | — |
 | <a href="#ref-100">[100]</a> Building cluster | Aggregate-state RMSE (°C) | &lt;0.32 | — |
 
-<sub>¹ RMSE was computed per building, then averaged across buildings and setpoint schedules.</sub>
 
-<sub>² Both fits used three training days. They differed in how those days were selected.</sub>
 
 ### Model validation
 
-What counts as a reference depends on the thermal quantity. The internal-mass study <a href="#ref-10">[10]</a> used sensors embedded in the material, while studies of room temperature fields also used detailed airflow simulations. The last column identifies the measurement, model or comparison used to assess agreement.
+This section summarizes how the studies validated their thermal models against measurements or reference simulations. Each entry identifies the quantity evaluated, the validation metric and the reference used.
 
 | Study and case | Validation metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -296,7 +293,7 @@ What counts as a reference depends on the thermal quantity. The internal-mass st
 
 ### Control performance
 
-A controller can improve comfort while using more energy. Over the 61-day Oslo house simulation <a href="#ref-8">[8]</a>, adaptive control reduced accumulated discomfort and increased electricity use relative to the fixed controller. The rows preserve both outcomes so the comfort and energy effects can be read together.
+This section summarizes the operational performance of HVAC control methods. Reported outcomes include energy use, operating cost, thermal comfort and demand response performance under the conditions evaluated in each study.
 
 | Study and case | Control outcome | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -335,13 +332,10 @@ A controller can improve comfort while using more energy. Over the 61-day Oslo h
 | <a href="#ref-95">[95]</a> Precooling, four Chinese climate zones | Office-hours cooling-load reduction | 20–45% | Cases without advance cooling |
 | <a href="#ref-96">[96]</a> Norwegian university, simulation | Peak heating-load reduction | 8.8% | Existing rule-based control |
 
-<sub>¹ The daily objective includes electricity charges and a thermal comfort penalty.</sub>
-
-<sub>² Both outcomes use the same comfort penalty weight of 10⁸.</sub>
 
 ### Thermal response and flexibility
 
-A building’s available flexibility changes as it heats up or cools down. One study tracks the reserve capacity available during a one-hour demand response event <a href="#ref-53">[53]</a>, while another estimates how long heating can be curtailed <a href="#ref-25">[25]</a>. The operating conditions and units distinguish estimates of power, duration and temperature change.
+This section summarizes how buildings respond to changes in heating, cooling and control settings. Reported quantities include temperature changes, available regulation capacity, peak demand reduction and the duration of load adjustments.
 
 | Study and case | Reported quantity | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -357,21 +351,11 @@ A building’s available flexibility changes as it heats up or cools down. One s
 | <a href="#ref-78">[78]</a> Best simulated two-layer envelope | Inner / outer thickness at longest annual comfort duration | 13.3 / 26.7 mm | 40 mm total phase-change material thickness |
 | <a href="#ref-94">[94]</a> Adjacent air-conditioned zones | Calculated HVAC load per floor area | 115–146 W/m² | Model includes stratification and CFD-derived convection coefficients |
 
-### Computation time
-
-Offline training and online control run on different timescales. The federated study <a href="#ref-2">[2]</a> timed training across 32 buildings, while the hotel study <a href="#ref-1">[1]</a> timed an individual optimization solve. The timed operation indicates which part of the model or controller the reported runtime describes.
-
-| Study and case | Timed operation | Reported result | Within-study reference |
-| --- | --- | --- | --- |
-| <a href="#ref-1">[1]</a> 22-zone hotel<sup>1</sup> | Online MPC solve · 8 h horizon | 1.09 s | 0.93 s · open-loop MPC |
-| <a href="#ref-2">[2]</a> 32 buildings<sup>1</sup> | Offline federated training | 414.04 min | 574.31 min · weights updated every round |
-| <a href="#ref-99">[99]</a> Single-zone flexibility calculation | Mean solver runtime | 0.0204 s | 0.2008 s · IPOPT |
-
-<sub>¹ These two studies used a 3.40 GHz Intel Xeon CPU and 16 GB of RAM.</sub>
 
 ### Qualitative findings
 
-Some experiments reveal when a modeling choice helps or hurts. In the room airflow study <a href="#ref-91">[91]</a>, four sensors gave a temperature-field error similar to the five-sensor layout, and one poorly placed sensor could worsen the estimate. The cases below summarize effects of this kind and the conditions under which they were observed.
+This section summarizes reported findings on model behavior, control feasibility and sensitivity to operating conditions. Each entry identifies the evaluation case and the observed effect.
+
 
 | Study and case | Quantity examined | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -392,7 +376,7 @@ Some experiments reveal when a modeling choice helps or hurts. In the room airfl
 
 ## References
 
-Select a paper title to open its DOI. Where a public GitHub repository could be verified, the link at the end of the citation identifies what it contains, such as the authors’ code, experimental data or the building emulator used in the study.
+This section lists the full citation and DOI link for each study. Where available, a GitHub link at the end of the citation identifies the associated code, data or simulation model.
 
 <a name="ref-1"></a>[1]. X. Cui, B. Liu, Y. Li, and Y. Wang, “[A “Smart Model-Then-Control” Strategy for the Scheduling of Thermostatically Controlled Loads](https://doi.org/10.1109/tsg.2025.3542544),” *IEEE Transactions on Smart Grid*, vol. 16, no. 3, pp. 2246–2260, 2025. [GitHub (code)](https://github.com/hkuedl/Smart-Model-then-Control)
 
