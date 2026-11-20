@@ -1,10 +1,12 @@
 # Building thermal dynamics
 
-100 journal articles published from 2022 to 2026 on building temperatures, heat transfer and HVAC control. Select a study number in any table to open its reference.
+How quickly does a room cool after its heating turns off? How much can a building shift electricity use while keeping its occupants comfortable? This collection brings together 100 journal articles published from 2022 to 2026 that model these thermal responses. A study keeps the same number across the methods, datasets and results tables.
 
 [Methods](#methods) · [Datasets](#datasets) · [Reported results](#reported-results) · [References](#references)
 
 ## Methods
+
+A two-resistance, two-capacitance model can describe how heat moves between the indoor air and the envelope of a home <a href="#ref-3">[3]</a>. Other studies model each room separately or train a model around the decisions an HVAC controller will make. The thermal quantity column identifies what each method is designed to estimate.
 
 | Method | Thermal quantity or task | Modeling idea |
 | --- | --- | --- |
@@ -115,6 +117,8 @@
 
 ## Datasets
 
+The Swiss NEST apartment provides measured bedroom temperatures <a href="#ref-4">[4]</a>, while the U.S. Department of Energy prototypes in <a href="#ref-2">[2]</a> provide simulated trajectories for 32 buildings. The evaluation setup shows which observations or scenarios each study used for testing, including the sampling interval or forecast horizon where reported.
+
 | Study | Building data | Evaluation setup |
 | --- | --- | --- |
 | <a href="#ref-1">[1]</a> SMC | DOE 22-zone hotel · EnergyPlus · 15 min | June training, July test · 8 h control horizon |
@@ -220,11 +224,13 @@
 
 ## Reported results
 
-Each row describes one experiment. Percent changes use the comparison named in that row. A dash means that the selected result has no separate comparator listed here.
+Forecast accuracy and control cost can favor different models. In the hotel case <a href="#ref-1">[1]</a>, the model trained for control had a higher temperature error than the model trained on prediction error, yet its controller achieved a lower daily cost than the open-loop comparison. Each table below uses the comparison from the same experiment. A dash marks a result presented without a separate comparator.
 
 [Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Computation time](#computation-time) · [Qualitative findings](#qualitative-findings)
 
 ### Prediction accuracy
+
+The forecast horizon matters even for a single room. In the Swiss bedroom study <a href="#ref-4">[4]</a>, the resistance–capacitance model had the smaller error one hour ahead, while the physically consistent neural network had the smaller error three days ahead. Read each error alongside its forecast horizon and the temperature being predicted.
 
 | Study and case | Prediction metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -269,6 +275,8 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 ### Model validation
 
+What counts as a reference depends on the thermal quantity. The internal-mass study <a href="#ref-10">[10]</a> used sensors embedded in the material, while studies of room temperature fields also used detailed airflow simulations. The last column identifies the measurement, model or comparison used to assess agreement.
+
 | Study and case | Validation metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
 | <a href="#ref-3">[3]</a> 187 Dutch homes | Indoor temperature RMSE | 0.54 °C (mean) | Independent ten-day measurements |
@@ -287,6 +295,8 @@ Each row describes one experiment. Percent changes use the comparison named in t
 | <a href="#ref-98">[98]</a> Ventilated-floor test room | Indoor-air temperature MAPE | 3.8% | On-site measurements |
 
 ### Control performance
+
+A controller can improve comfort while using more energy. Over the 61-day Oslo house simulation <a href="#ref-8">[8]</a>, adaptive control reduced accumulated discomfort and increased electricity use relative to the fixed controller. The rows preserve both outcomes so the comfort and energy effects can be read together.
 
 | Study and case | Control outcome | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -331,6 +341,8 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 ### Thermal response and flexibility
 
+A building’s available flexibility changes as it heats up or cools down. One study tracks the reserve capacity available during a one-hour demand response event <a href="#ref-53">[53]</a>, while another estimates how long heating can be curtailed <a href="#ref-25">[25]</a>. The operating conditions and units distinguish estimates of power, duration and temperature change.
+
 | Study and case | Reported quantity | Reported result | Within-study reference |
 | --- | --- | --- | --- |
 | <a href="#ref-19">[19]</a> September, 21 working days | Mean delay of peak cooling power | 0.8 h | With nighttime cooling of internal mass |
@@ -347,6 +359,8 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 ### Computation time
 
+Offline training and online control run on different timescales. The federated study <a href="#ref-2">[2]</a> timed training across 32 buildings, while the hotel study <a href="#ref-1">[1]</a> timed an individual optimization solve. The timed operation indicates which part of the model or controller the reported runtime describes.
+
 | Study and case | Timed operation | Reported result | Within-study reference |
 | --- | --- | --- | --- |
 | <a href="#ref-1">[1]</a> 22-zone hotel<sup>1</sup> | Online MPC solve · 8 h horizon | 1.09 s | 0.93 s · open-loop MPC |
@@ -356,6 +370,8 @@ Each row describes one experiment. Percent changes use the comparison named in t
 <sub>¹ These two studies used a 3.40 GHz Intel Xeon CPU and 16 GB of RAM.</sub>
 
 ### Qualitative findings
+
+Some experiments reveal when a modeling choice helps or hurts. In the room airflow study <a href="#ref-91">[91]</a>, four sensors gave a temperature-field error similar to the five-sensor layout, and one poorly placed sensor could worsen the estimate. The cases below summarize effects of this kind and the conditions under which they were observed.
 
 | Study and case | Quantity examined | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -376,25 +392,27 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 ## References
 
-<a name="ref-1"></a>[1]. X. Cui, B. Liu, Y. Li, and Y. Wang, “[A “Smart Model-Then-Control” Strategy for the Scheduling of Thermostatically Controlled Loads](https://doi.org/10.1109/tsg.2025.3542544),” *IEEE Transactions on Smart Grid*, vol. 16, no. 3, pp. 2246–2260, 2025.
+Select a paper title to open its DOI. Where a public GitHub repository could be verified, the link at the end of the citation identifies what it contains, such as the authors’ code, experimental data or the building emulator used in the study.
 
-<a name="ref-2"></a>[2]. X. Cui, D. Qin, J.-F. Toubeau, F. Vallée, and Y. Wang, “[Generalizable Thermal Dynamics Modeling via Personalized Federated Learning](https://doi.org/10.1109/tsg.2025.3585942),” *IEEE Transactions on Smart Grid*, vol. 16, no. 6, pp. 4698–4711, 2025.
+<a name="ref-1"></a>[1]. X. Cui, B. Liu, Y. Li, and Y. Wang, “[A “Smart Model-Then-Control” Strategy for the Scheduling of Thermostatically Controlled Loads](https://doi.org/10.1109/tsg.2025.3542544),” *IEEE Transactions on Smart Grid*, vol. 16, no. 3, pp. 2246–2260, 2025. [GitHub (code)](https://github.com/hkuedl/Smart-Model-then-Control)
 
-<a name="ref-3"></a>[3]. I. Pothof, D. Vreeken, and M. v. Meerkerk, “[Data-driven method for optimized supply temperatures in residential buildings](https://doi.org/10.1016/j.energy.2023.129183),” *Energy*, vol. 284, Art. no. 129183, 2023.
+<a name="ref-2"></a>[2]. X. Cui, D. Qin, J.-F. Toubeau, F. Vallée, and Y. Wang, “[Generalizable Thermal Dynamics Modeling via Personalized Federated Learning](https://doi.org/10.1109/tsg.2025.3585942),” *IEEE Transactions on Smart Grid*, vol. 16, no. 6, pp. 4698–4711, 2025. [GitHub (code)](https://github.com/hkuedl/Federated-Thermal-Dynamics-Modeling)
 
-<a name="ref-4"></a>[4]. L. Di Natale, B. Svetozarevic, P. Heer, and C. N. Jones, “[Physically Consistent Neural Networks for building thermal modeling: Theory and analysis](https://doi.org/10.1016/j.apenergy.2022.119806),” *Applied Energy*, vol. 325, Art. no. 119806, 2022.
+<a name="ref-3"></a>[3]. I. Pothof, D. Vreeken, and M. van Meerkerk, “[Data-driven method for optimized supply temperatures in residential buildings](https://doi.org/10.1016/j.energy.2023.129183),” *Energy*, vol. 284, Art. no. 129183, 2023.
 
-<a name="ref-5"></a>[5]. L. Di Natale, B. Svetozarevic, P. Heer, and C. N. Jones, “[Towards scalable physically consistent neural networks: An application to data-driven multi-zone thermal building models](https://doi.org/10.1016/j.apenergy.2023.121071),” *Applied Energy*, vol. 340, Art. no. 121071, 2023.
+<a name="ref-4"></a>[4]. L. Di Natale, B. Svetozarevic, P. Heer, and C. N. Jones, “[Physically Consistent Neural Networks for building thermal modeling: Theory and analysis](https://doi.org/10.1016/j.apenergy.2022.119806),” *Applied Energy*, vol. 325, Art. no. 119806, 2022. [GitHub (shared PCNN implementation)](https://github.com/Cemempamoi/pcnn)
+
+<a name="ref-5"></a>[5]. L. Di Natale, B. Svetozarevic, P. Heer, and C. N. Jones, “[Towards scalable physically consistent neural networks: An application to data-driven multi-zone thermal building models](https://doi.org/10.1016/j.apenergy.2023.121071),” *Applied Energy*, vol. 340, Art. no. 121071, 2023. [GitHub (shared PCNN implementation)](https://github.com/Cemempamoi/pcnn)
 
 <a name="ref-6"></a>[6]. S. S. V. Kalidindi, H. Banaee, H. Karlsson, and A. Loutfi, “[Indoor temperature prediction with context-aware models in residential buildings](https://doi.org/10.1016/j.buildenv.2023.110772),” *Building and Environment*, vol. 244, Art. no. 110772, 2023.
 
-<a name="ref-7"></a>[7]. Y. Chen, Q. Yang, Z. Chen, C. Yan, S. Zeng, and M. Dai, “[Physics-informed neural networks for building thermal modeling and demand response control](https://doi.org/10.1016/j.buildenv.2023.110149),” *Building and Environment*, vol. 234, Art. no. 110149, 2023.
+<a name="ref-7"></a>[7]. Y. Chen, Q. Yang, Z. Chen, C. Yan, S. Zeng, and M. Dai, “[Physics-informed neural networks for building thermal modeling and demand response control](https://doi.org/10.1016/j.buildenv.2023.110149),” *Building and Environment*, vol. 234, Art. no. 110149, 2023. [GitHub (code)](https://github.com/Bob05757/PINNs-for-building-thermal-modeling-and-Demand-Response)
 
 <a name="ref-8"></a>[8]. X. Yu, Z. Ren, P. Liu, L. Imsland, and L. Georges, “[Comparison of time-invariant and adaptive linear grey-box models for model predictive control of residential buildings](https://doi.org/10.1016/j.buildenv.2024.111391),” *Building and Environment*, vol. 254, Art. no. 111391, 2024.
 
-<a name="ref-9"></a>[9]. X. Wang et al., “[An adaptive grey-box model for nearly zero energy building operations in challenging climate](https://doi.org/10.1016/j.energy.2026.141151),” *Energy*, vol. 355, Art. no. 141151, 2026.
+<a name="ref-9"></a>[9]. X. Wang, Y. Ye, W. Deng, Y. Wu, Z. Zhang, T. Wu, and Y. Ma, “[An adaptive grey-box model for nearly zero energy building operations in challenging climate](https://doi.org/10.1016/j.energy.2026.141151),” *Energy*, vol. 355, Art. no. 141151, 2026.
 
-<a name="ref-10"></a>[10]. F. Qi et al., “[Enhancing EnergyPlus simulation of internal mass for dynamic thermal energy storage](https://doi.org/10.1016/j.energy.2026.141885),” *Energy*, vol. 361, Art. no. 141885, 2026.
+<a name="ref-10"></a>[10]. F. Qi, W. Wu, N. Yoon, W. Zhang, M. Li, C. Wang, and H. Wang, “[Enhancing EnergyPlus simulation of internal mass for dynamic thermal energy storage](https://doi.org/10.1016/j.energy.2026.141885),” *Energy*, vol. 361, Art. no. 141885, 2026.
 
 <a name="ref-11"></a>[11]. Z. Guo, Y. Li, J. Ping, J. Zhu, Z. Yan, and M.-Y. Chow, “[A self-adaptive modeling and control framework for HVAC systems considering user stochasticity](https://doi.org/10.1016/j.apenergy.2026.127512),” *Applied Energy*, vol. 409, Art. no. 127512, 2026.
 
@@ -406,13 +424,13 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-15"></a>[15]. R.-D. López-Carreño, M. Macarulla, S. Gassó-Domingo, B. Tejedor, and F. Pardo-Bosch, “[A grey-box temperature model for digital twins of building-integrated rooftop greenhouses](https://doi.org/10.1016/j.buildenv.2025.114036),” *Building and Environment*, vol. 289, Art. no. 114036, 2026.
 
-<a name="ref-16"></a>[16]. H. Zhang et al., “[A spatiotemporal indoor thermal and visual quality prediction framework based on a structured multi-branch CNN–LSTM network](https://doi.org/10.1016/j.buildenv.2026.114378),” *Building and Environment*, vol. 294, Art. no. 114378, 2026.
+<a name="ref-16"></a>[16]. H. Zhang, Y. Wang, H. Zhao, W. Yao, W. Gao, G. Yang, L. Sun, and Z. Jiang, “[A spatiotemporal indoor thermal and visual quality prediction framework based on a structured multi-branch CNN–LSTM network](https://doi.org/10.1016/j.buildenv.2026.114378),” *Building and Environment*, vol. 294, Art. no. 114378, 2026.
 
 <a name="ref-17"></a>[17]. X. Yang, S. Yoon, S.-J. Yoo, Y. Arima, Y. Choi, and A. Ozaki, “[High-fidelity spatiotemporal prediction of thermal environments in hybrid HVAC-conditioned open-plan offices using a coupled BES–CFD framework](https://doi.org/10.1016/j.buildenv.2026.115138),” *Building and Environment*, vol. 304, Art. no. 115138, 2026.
 
 <a name="ref-18"></a>[18]. Y. Miao, C. Huang, J. Zhu, T. Yang, Z. Zou, and F. Wang, “[Prediction of thermal environment and stratified air-conditioning load in existing large spaces based on unsteady-state Block-Gebhart model](https://doi.org/10.1016/j.buildenv.2026.114267),” *Building and Environment*, vol. 291, Art. no. 114267, 2026.
 
-<a name="ref-19"></a>[19]. M. Li et al., “[Energy flexibility of nighttime cooling of internal thermal mass: Development of EnergyPlus Python Plugin](https://doi.org/10.1016/j.energy.2026.141263),” *Energy*, vol. 357, Art. no. 141263, 2026.
+<a name="ref-19"></a>[19]. M. Li, W. Wu, A. Bakker, W. Zhang, D. Bishop, H. Wang, and B. Nastasi, “[Energy flexibility of nighttime cooling of internal thermal mass: Development of EnergyPlus Python Plugin](https://doi.org/10.1016/j.energy.2026.141263),” *Energy*, vol. 357, Art. no. 141263, 2026.
 
 <a name="ref-20"></a>[20]. J. Pan, S. Wang, and H. Li, “[Grid-interactive characteristics of passive thermal storage in buildings and the key influential factors – An experimental and analytical assessment](https://doi.org/10.1016/j.energy.2026.140828),” *Energy*, vol. 351, Art. no. 140828, 2026.
 
@@ -428,25 +446,25 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-26"></a>[26]. Q. Zhu, Y. Yang, L. Yu, Q.-S. Jia, C. J. Spanos, and X. Guan, “[A Unified Virtual Battery Modeling Framework for Flexibility Characterization of Building HVAC Systems](https://doi.org/10.1109/tsg.2026.3704436),” *IEEE Transactions on Smart Grid*, vol. 17, no. 6, pp. 5448–5459, 2026.
 
-<a name="ref-27"></a>[27]. B. Li et al., “[Demand Response Potential Evaluation for Commercial HVAC Loads Considering Cooling Storage in Chilled Water Loops](https://doi.org/10.1109/tsg.2026.3676769),” *IEEE Transactions on Smart Grid*, vol. 17, no. 5, pp. 3941–3953, 2026.
+<a name="ref-27"></a>[27]. B. Li, H. Tang, L. Zhu, B. Zhou, Q. Zhou, C. Zhang, J. Li, and Z. Shuai, “[Demand Response Potential Evaluation for Commercial HVAC Loads Considering Cooling Storage in Chilled Water Loops](https://doi.org/10.1109/tsg.2026.3676769),” *IEEE Transactions on Smart Grid*, vol. 17, no. 5, pp. 3941–3953, 2026.
 
-<a name="ref-28"></a>[28]. X. Cui, L. Chen, Y. Wang, and B. Xu, “[Online Scheduling of Thermostatically Controlled Loads: A Stepwise Reformulation Approach](https://doi.org/10.1109/tsg.2026.3731515),” *IEEE Transactions on Smart Grid*, early access, 2026.
+<a name="ref-28"></a>[28]. X. Cui, L. Chen, Y. Wang, and B. Xu, “[Online Scheduling of Thermostatically Controlled Loads: A Stepwise Reformulation Approach](https://doi.org/10.1109/tsg.2026.3731515),” *IEEE Transactions on Smart Grid*, early access, 2026. [GitHub (code)](https://github.com/hkuedl/Online-Multi-zone-TCL-Scheduling)
 
 <a name="ref-29"></a>[29]. X. Liu, Q. Chen, P. S. Nielsen, and R. Liu, “[Physics-Informed Online Optimization for Building Energy Management: Exploiting Thermal Dynamics as Constraint Structure](https://doi.org/10.1109/tsg.2026.3741935),” *IEEE Transactions on Smart Grid*, early access, 2026.
 
-<a name="ref-30"></a>[30]. J. Rousseau, H. Cai, P. Heer, K. Orehounig, and G. Hug, “[Uncertainty-Aware Flexibility of HVAC Systems in Buildings: From Quantification to Provision](https://doi.org/10.1109/tsg.2025.3611455),” *IEEE Transactions on Smart Grid*, vol. 17, no. 1, pp. 269–282, 2026.
+<a name="ref-30"></a>[30]. J. Rousseau, H. Cai, P. Heer, K. Orehounig, and G. Hug, “[Uncertainty-Aware Flexibility of HVAC Systems in Buildings: From Quantification to Provision](https://doi.org/10.1109/tsg.2025.3611455),” *IEEE Transactions on Smart Grid*, vol. 17, no. 1, pp. 269–282, 2026. [GitHub (building emulator)](https://github.com/uesl-empa/nestli)
 
-<a name="ref-31"></a>[31]. D. Chen, C.-K. Chui, and P. S. Lee, “[Adaptive physically consistent neural networks for data center thermal dynamics modeling](https://doi.org/10.1016/j.apenergy.2024.124637),” *Applied Energy*, vol. 377, Art. no. 124637, 2025.
+<a name="ref-31"></a>[31]. D. Chen, C.-K. Chui, and P. S. Lee, “[Adaptive physically consistent neural networks for data center thermal dynamics modeling](https://doi.org/10.1016/j.apenergy.2024.124637),” *Applied Energy*, vol. 377, Art. no. 124637, 2025. [GitHub (code)](https://github.com/chendong-energy/Adaptive-PCNN)
 
-<a name="ref-32"></a>[32]. L. Von Krannichfeldt, K. Orehounig, and O. Fink, “[Combining physics-based and data-driven modeling for building energy systems](https://doi.org/10.1016/j.apenergy.2025.125853),” *Applied Energy*, vol. 391, Art. no. 125853, 2025.
+<a name="ref-32"></a>[32]. L. Von Krannichfeldt, K. Orehounig, and O. Fink, “[Combining physics-based and data-driven modeling for building energy systems](https://doi.org/10.1016/j.apenergy.2025.125853),” *Applied Energy*, vol. 391, Art. no. 125853, 2025. [GitHub (code and data)](https://github.com/Leo-VK/hybrid_bem)
 
-<a name="ref-33"></a>[33]. Y. Lu et al., “[Deep reinforcement learning for HVAC control with nonlinear parametric thermal network modeling for passive building envelopes](https://doi.org/10.1016/j.apenergy.2025.126863),” *Applied Energy*, vol. 402, Art. no. 126863, 2025.
+<a name="ref-33"></a>[33]. Y. Lu, W. Wang, C. Wang, Z. Li, Y. Zhou, X. Chen, T. C. Ho, and C. Y. Tso, “[Deep reinforcement learning for HVAC control with nonlinear parametric thermal network modeling for passive building envelopes](https://doi.org/10.1016/j.apenergy.2025.126863),” *Applied Energy*, vol. 402, Art. no. 126863, 2025.
 
 <a name="ref-34"></a>[34]. L. Tang, H. Xie, Y. Wang, and Z. Xu, “[Deeply flexible commercial building HVAC system control: A physics-aware deep learning-embedded MPC approach](https://doi.org/10.1016/j.apenergy.2025.125631),” *Applied Energy*, vol. 388, Art. no. 125631, 2025.
 
 <a name="ref-35"></a>[35]. M. Montazeri, C. Remlinger, B. Bejar Haro, and P. Heer, “[Fully data-driven and modular building thermal control with physically consistent modeling](https://doi.org/10.1016/j.apenergy.2025.125770),” *Applied Energy*, vol. 390, Art. no. 125770, 2025.
 
-<a name="ref-36"></a>[36]. J. Bjørnskov, A. Thomsen, and M. Jradi, “[Large-scale field demonstration of an interoperable and ontology-based energy modeling framework for building digital twins](https://doi.org/10.1016/j.apenergy.2025.125597),” *Applied Energy*, vol. 387, Art. no. 125597, 2025.
+<a name="ref-36"></a>[36]. J. Bjørnskov, A. Thomsen, and M. Jradi, “[Large-scale field demonstration of an interoperable and ontology-based energy modeling framework for building digital twins](https://doi.org/10.1016/j.apenergy.2025.125597),” *Applied Energy*, vol. 387, Art. no. 125597, 2025. [GitHub (digital twin framework)](https://github.com/JBjoernskov/Twin4Build)
 
 <a name="ref-37"></a>[37]. F. Jiang and H. Kazmi, “[What-if: A causal machine learning approach to control-oriented modelling for building thermal dynamics](https://doi.org/10.1016/j.apenergy.2024.124550),” *Applied Energy*, vol. 377, Art. no. 124550, 2025.
 
@@ -456,9 +474,9 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-40"></a>[40]. W. Jiang, P. Wang, X. Ma, and Y. Liu, “[Development of a grey-box heat load prediction model by subspace identification method for heating building](https://doi.org/10.1016/j.buildenv.2025.113119),” *Building and Environment*, vol. 280, Art. no. 113119, 2025.
 
-<a name="ref-41"></a>[41]. W. Qian et al., “[Estimating indoor air temperature and humidity distributions by data assimilation with finite observations: Validation using an actual residential room](https://doi.org/10.1016/j.buildenv.2024.112495),” *Building and Environment*, vol. 269, Art. no. 112495, 2025.
+<a name="ref-41"></a>[41]. W. Qian, C. Li, H. Gao, L. Zhuang, Y. Lu, S. Hu, and J. Liu, “[Estimating indoor air temperature and humidity distributions by data assimilation with finite observations: Validation using an actual residential room](https://doi.org/10.1016/j.buildenv.2024.112495),” *Building and Environment*, vol. 269, Art. no. 112495, 2025.
 
-<a name="ref-42"></a>[42]. Y. Yuan et al., “[Fast prediction of indoor temperature distribution under spatiotemporal variation of solar radiation using equivalent surface heat sources and multimodal CNN](https://doi.org/10.1016/j.buildenv.2025.113641),” *Building and Environment*, vol. 285, Art. no. 113641, 2025.
+<a name="ref-42"></a>[42]. Y. Yuan, J. Gao, M. Li, G. Liu, Y. Yu, Z. Yu, and H. Zhang, “[Fast prediction of indoor temperature distribution under spatiotemporal variation of solar radiation using equivalent surface heat sources and multimodal CNN](https://doi.org/10.1016/j.buildenv.2025.113641),” *Building and Environment*, vol. 285, Art. no. 113641, 2025.
 
 <a name="ref-43"></a>[43]. G. Liu, J. Gao, Z. Han, and Y. Yuan, “[Hybrid model-based predictive HVAC control through fast prediction of transient indoor temperature fields](https://doi.org/10.1016/j.buildenv.2024.112253),” *Building and Environment*, vol. 267, Art. no. 112253, 2025.
 
@@ -476,9 +494,9 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-50"></a>[50]. B. Han, H. Li, and S. Wang, “[Analytical Solutions of Air-Conditioning Load Flexibility](https://doi.org/10.1109/tsg.2024.3474421),” *IEEE Transactions on Smart Grid*, vol. 16, no. 1, pp. 441–444, 2025.
 
-<a name="ref-51"></a>[51]. X. Cui, J.-F. Toubeau, F. Vallée, and Y. Wang, “[Decision-Oriented Modeling of Thermal Dynamics Within Buildings](https://doi.org/10.1109/tsg.2024.3445574),” *IEEE Transactions on Smart Grid*, vol. 16, no. 1, pp. 369–382, 2025.
+<a name="ref-51"></a>[51]. X. Cui, J.-F. Toubeau, F. Vallée, and Y. Wang, “[Decision-Oriented Modeling of Thermal Dynamics Within Buildings](https://doi.org/10.1109/tsg.2024.3445574),” *IEEE Transactions on Smart Grid*, vol. 16, no. 1, pp. 369–382, 2025. [GitHub (code)](https://github.com/hkuedl/Decision-Oriented-Thermal-Dynamics-Modeling)
 
-<a name="ref-52"></a>[52]. X. Cui, Y. Wang, and B. Xu, “[Dimension-Reduced Optimization of Multi-Zone Thermostatically Controlled Loads](https://doi.org/10.1109/tsg.2025.3579778),” *IEEE Transactions on Smart Grid*, vol. 16, no. 6, pp. 4685–4697, 2025.
+<a name="ref-52"></a>[52]. X. Cui, Y. Wang, and B. Xu, “[Dimension-Reduced Optimization of Multi-Zone Thermostatically Controlled Loads](https://doi.org/10.1109/tsg.2025.3579778),” *IEEE Transactions on Smart Grid*, vol. 16, no. 6, pp. 4685–4697, 2025. [GitHub (code and data)](https://github.com/hkuedl/Latent-Variable-based-Optimization)
 
 <a name="ref-53"></a>[53]. T. Qi, H. Hui, and Y. Song, “[Exploring the Feasible Regulation Region of Building HVAC Systems Within Hygro-Thermal Comfort](https://doi.org/10.1109/tsg.2025.3569074),” *IEEE Transactions on Smart Grid*, vol. 16, no. 4, pp. 2926–2939, 2025.
 
@@ -488,17 +506,17 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-56"></a>[56]. X. Cui, S. Liu, G. Ruan, and Y. Wang, “[Data-driven aggregation of thermal dynamics within building virtual power plants](https://doi.org/10.1016/j.apenergy.2023.122126),” *Applied Energy*, vol. 353, Art. no. 122126, 2024.
 
-<a name="ref-57"></a>[57]. W. Zheng, D. Wang, and Z. Wang, “[Economic model predictive control for building HVAC system: A comparative analysis of model-based and data-driven approaches using the BOPTEST Framework](https://doi.org/10.1016/j.apenergy.2024.123969),” *Applied Energy*, vol. 374, Art. no. 123969, 2024.
+<a name="ref-57"></a>[57]. W. Zheng, D. Wang, and Z. Wang, “[Economic model predictive control for building HVAC system: A comparative analysis of model-based and data-driven approaches using the BOPTEST Framework](https://doi.org/10.1016/j.apenergy.2024.123969),” *Applied Energy*, vol. 374, Art. no. 123969, 2024. [GitHub (code)](https://github.com/wfzheng/EMPC_Comparision)
 
-<a name="ref-58"></a>[58]. H. Wang, X. Chen, N. Vital, E. Duffy, and A. Razi, “[Energy optimization for HVAC systems in multi-VAV open offices: A deep reinforcement learning approach](https://doi.org/10.1016/j.apenergy.2023.122354),” *Applied Energy*, vol. 356, Art. no. 122354, 2024.
+<a name="ref-58"></a>[58]. H. Wang, X. Chen, N. Vital, E. Duffy, and A. Razi, “[Energy optimization for HVAC systems in multi-VAV open offices: A deep reinforcement learning approach](https://doi.org/10.1016/j.apenergy.2023.122354),” *Applied Energy*, vol. 356, Art. no. 122354, 2024. [GitHub (code)](https://github.com/AIS-Clemson/DRL-BEMS)
 
 <a name="ref-59"></a>[59]. V. Taboga, C. Gehring, M. L. Cam, H. Dagdougui, and P.-L. Bacon, “[Neural differential equations for temperature control in buildings under demand response programs](https://doi.org/10.1016/j.apenergy.2024.123433),” *Applied Energy*, vol. 368, Art. no. 123433, 2024.
 
-<a name="ref-60"></a>[60]. Y. Bian, X. Fu, R. K. Gupta, and Y. Shi, “[Ventilation and temperature control for energy-efficient and healthy buildings: A differentiable PDE approach](https://doi.org/10.1016/j.apenergy.2024.123477),” *Applied Energy*, vol. 372, Art. no. 123477, 2024.
+<a name="ref-60"></a>[60]. Y. Bian, X. Fu, R. K. Gupta, and Y. Shi, “[Ventilation and temperature control for energy-efficient and healthy buildings: A differentiable PDE approach](https://doi.org/10.1016/j.apenergy.2024.123477),” *Applied Energy*, vol. 372, Art. no. 123477, 2024. [GitHub (code and data)](https://github.com/alwaysbyx/PDE-HVAC-control)
 
 <a name="ref-61"></a>[61]. M. Hostein, M. Musy, B. Moujalled, and M. El Mankibi, “[Generating meteorological files of future climates with heatwaves in urban context to evaluate building overheating: An energy-efficient dwelling case study](https://doi.org/10.1016/j.buildenv.2024.111874),” *Building and Environment*, vol. 263, Art. no. 111874, 2024.
 
-<a name="ref-62"></a>[62]. J. Wang et al., “[Low-order gray-box modeling of heating buildings and the progressive dimension reduction identification of uncertain model parameters](https://doi.org/10.1016/j.energy.2024.130812),” *Energy*, vol. 294, Art. no. 130812, 2024.
+<a name="ref-62"></a>[62]. J. Wang, F. Kong, B. Pan, J. Zheng, P. Xue, C. Sun, and C. Qi, “[Low-order gray-box modeling of heating buildings and the progressive dimension reduction identification of uncertain model parameters](https://doi.org/10.1016/j.energy.2024.130812),” *Energy*, vol. 294, Art. no. 130812, 2024.
 
 <a name="ref-63"></a>[63]. P. Hua, H. Wang, Z. Xie, and R. Lahdelma, “[Multi-criteria evaluation of novel multi-objective model predictive control method for indoor thermal comfort](https://doi.org/10.1016/j.energy.2023.129883),” *Energy*, vol. 289, Art. no. 129883, 2024.
 
@@ -506,7 +524,7 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-65"></a>[65]. B. He, N. Zhang, C. Fang, Y. Su, and Y. Wang, “[Flexible Building Energy Management With Neural ODEs-Based Model Predictive Control](https://doi.org/10.1109/tsg.2024.3401227),” *IEEE Transactions on Smart Grid*, vol. 15, no. 5, pp. 4690–4704, 2024.
 
-<a name="ref-66"></a>[66]. Z. Hou et al., “[Privacy-Preserved Aggregate Thermal Dynamic Model of Buildings](https://doi.org/10.1109/tsg.2024.3420743),” *IEEE Transactions on Smart Grid*, vol. 15, no. 6, pp. 5653–5664, 2024.
+<a name="ref-66"></a>[66]. Z. Hou, S. Lu, Y. Xu, H. Qiu, W. Gu, Z. Y. Dong, and S. Ding, “[Privacy-Preserved Aggregate Thermal Dynamic Model of Buildings](https://doi.org/10.1109/tsg.2024.3420743),” *IEEE Transactions on Smart Grid*, vol. 15, no. 6, pp. 5653–5664, 2024.
 
 <a name="ref-67"></a>[67]. W. Aslam, P. Andrianesis, and M. Caramanis, “[Optimal HVAC Energy and Regulation Reserve Scheduling in Power Markets](https://doi.org/10.1109/tste.2023.3279060),” *IEEE Transactions on Sustainable Energy*, vol. 15, no. 1, pp. 201–214, 2024.
 
@@ -518,13 +536,13 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-71"></a>[71]. Y. Jiang, S. Zhu, Q. Xu, B. Yang, and X. Guan, “[Hybrid modeling-based temperature and humidity adaptive control for a multi-zone HVAC system](https://doi.org/10.1016/j.apenergy.2022.120622),” *Applied Energy*, vol. 334, Art. no. 120622, 2023.
 
-<a name="ref-72"></a>[72]. M. Frahm, T. Dengiz, P. Zwickel, H. Maaß, J. Matthes, and V. Hagenmeyer, “[Occupant-oriented demand response with multi-zone thermal building control](https://doi.org/10.1016/j.apenergy.2023.121454),” *Applied Energy*, vol. 347, Art. no. 121454, 2023.
+<a name="ref-72"></a>[72]. M. Frahm, T. Dengiz, P. Zwickel, H. Maaß, J. Matthes, and V. Hagenmeyer, “[Occupant-oriented demand response with multi-zone thermal building control](https://doi.org/10.1016/j.apenergy.2023.121454),” *Applied Energy*, vol. 347, Art. no. 121454, 2023. [GitHub (code and control results)](https://github.com/Occupant-Oriented-Demand-Response/Conrol-Results)
 
-<a name="ref-73"></a>[73]. A. Canet and M. Qadrdan, “[Quantification of flexibility from the thermal mass of residential buildings in England and Wales](https://doi.org/10.1016/j.apenergy.2023.121616),” *Applied Energy*, vol. 349, Art. no. 121616, 2023.
+<a name="ref-73"></a>[73]. A. Canet and M. Qadrdan, “[Quantification of flexibility from the thermal mass of residential buildings in England and Wales](https://doi.org/10.1016/j.apenergy.2023.121616),” *Applied Energy*, vol. 349, Art. no. 121616, 2023. [GitHub (code)](https://github.com/AlexandreLab/flexibilitydwellings)
 
-<a name="ref-74"></a>[74]. J. Zhang et al., “[Graph neural network-based spatio-temporal indoor environment prediction and optimal control for central air-conditioning systems](https://doi.org/10.1016/j.buildenv.2023.110600),” *Building and Environment*, vol. 242, Art. no. 110600, 2023.
+<a name="ref-74"></a>[74]. J. Zhang, F. Xiao, A. Li, T. Ma, K. Xu, H. Zhang, R. Yan, X. Fang, Y. Li, and D. Wang, “[Graph neural network-based spatio-temporal indoor environment prediction and optimal control for central air-conditioning systems](https://doi.org/10.1016/j.buildenv.2023.110600),” *Building and Environment*, vol. 242, Art. no. 110600, 2023.
 
-<a name="ref-75"></a>[75]. T. Xing, K. Sun, and Q. Zhao, “[MITP-Net: A deep-learning framework for short-term indoor temperature predictions in multi-zone buildings](https://doi.org/10.1016/j.buildenv.2023.110388),” *Building and Environment*, vol. 239, Art. no. 110388, 2023.
+<a name="ref-75"></a>[75]. T. Xing, K. Sun, and Q. Zhao, “[MITP-Net: A deep-learning framework for short-term indoor temperature predictions in multi-zone buildings](https://doi.org/10.1016/j.buildenv.2023.110388),” *Building and Environment*, vol. 239, Art. no. 110388, 2023. [GitHub (code and data)](https://github.com/XingTian1994/MITP-Net)
 
 <a name="ref-76"></a>[76]. M. Sulzer, A. Christen, and A. Matzarakis, “[Predicting indoor air temperature and thermal comfort in occupational settings using weather forecasts, indoor sensors, and artificial neural networks](https://doi.org/10.1016/j.buildenv.2023.110077),” *Building and Environment*, vol. 234, Art. no. 110077, 2023.
 
@@ -538,7 +556,7 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-81"></a>[81]. W. Wang, G. Tian, Q. Z. Sun, and H. Liu, “[A Control Framework to Enable a Commercial Building HVAC System for Energy and Regulation Market Signal Tracking](https://doi.org/10.1109/tpwrs.2022.3156867),” *IEEE Transactions on Power Systems*, vol. 38, no. 1, pp. 290–301, 2023.
 
-<a name="ref-82"></a>[82]. Z. Wei et al., “[Data-driven two-step identification of building thermal characteristics: A case study of office building](https://doi.org/10.1016/j.apenergy.2022.119949),” *Applied Energy*, vol. 326, Art. no. 119949, 2022.
+<a name="ref-82"></a>[82]. Z. Wei, F. Ren, Y. Zhu, B. Yue, Y. Ding, C. Zheng, B. Li, and X. Zhai, “[Data-driven two-step identification of building thermal characteristics: A case study of office building](https://doi.org/10.1016/j.apenergy.2022.119949),” *Applied Energy*, vol. 326, Art. no. 119949, 2022.
 
 <a name="ref-83"></a>[83]. J. Wang, Y. Jiang, C. Y. Tang, and L. Song, “[Development and validation of a second-order thermal network model for residential buildings](https://doi.org/10.1016/j.apenergy.2021.118124),” *Applied Energy*, vol. 306, Art. no. 118124, 2022.
 
@@ -546,27 +564,27 @@ Each row describes one experiment. Percent changes use the comparison named in t
 
 <a name="ref-85"></a>[85]. C. A. Thilker, J. B. Jørgensen, and H. Madsen, “[Linear quadratic Gaussian control with advanced continuous-time disturbance models for building thermal regulation](https://doi.org/10.1016/j.apenergy.2022.120086),” *Applied Energy*, vol. 327, Art. no. 120086, 2022.
 
-<a name="ref-86"></a>[86]. S. Yang, H. Oliver Gao, and F. You, “[Model predictive control in phase-change-material-wallboard-enhanced building energy management considering electricity price dynamics](https://doi.org/10.1016/j.apenergy.2022.120023),” *Applied Energy*, vol. 326, Art. no. 120023, 2022.
+<a name="ref-86"></a>[86]. S. Yang, H. O. Gao, and F. You, “[Model predictive control in phase-change-material-wallboard-enhanced building energy management considering electricity price dynamics](https://doi.org/10.1016/j.apenergy.2022.120023),” *Applied Energy*, vol. 326, Art. no. 120023, 2022.
 
-<a name="ref-87"></a>[87]. G. Gokhale, B. Claessens, and C. Develder, “[Physics informed neural networks for control oriented thermal modeling of buildings](https://doi.org/10.1016/j.apenergy.2022.118852),” *Applied Energy*, vol. 314, Art. no. 118852, 2022.
+<a name="ref-87"></a>[87]. G. Gokhale, B. Claessens, and C. Develder, “[Physics informed neural networks for control oriented thermal modeling of buildings](https://doi.org/10.1016/j.apenergy.2022.118852),” *Applied Energy*, vol. 314, Art. no. 118852, 2022. [GitHub (code and simulation data)](https://github.com/GargyaGokhale/PhysNet_Thermal_Models)
 
 <a name="ref-88"></a>[88]. B. Jiang, H. Gong, H. Qin, and M. Zhu, “[Attention-LSTM architecture combined with Bayesian hyperparameter optimization for indoor temperature prediction](https://doi.org/10.1016/j.buildenv.2022.109536),” *Building and Environment*, vol. 224, Art. no. 109536, 2022.
 
-<a name="ref-89"></a>[89]. F. M. Baba, H. Ge, R. Zmeureanu, and L. (. Wang, “[Calibration of building model based on indoor temperature for overheating assessment using genetic algorithm: Methodology, evaluation criteria, and case study](https://doi.org/10.1016/j.buildenv.2021.108518),” *Building and Environment*, vol. 207, Art. no. 108518, 2022.
+<a name="ref-89"></a>[89]. F. M. Baba, H. Ge, R. Zmeureanu, and L. Wang, “[Calibration of building model based on indoor temperature for overheating assessment using genetic algorithm: Methodology, evaluation criteria, and case study](https://doi.org/10.1016/j.buildenv.2021.108518),” *Building and Environment*, vol. 207, Art. no. 108518, 2022.
 
 <a name="ref-90"></a>[90]. W. Qian, M. Tang, H. Gao, J. Dong, J. Liang, and J. Liu, “[Improving indoor air flow and temperature prediction with local measurements based on CFD-EnKF data assimilation](https://doi.org/10.1016/j.buildenv.2022.109511),” *Building and Environment*, vol. 223, Art. no. 109511, 2022.
 
-<a name="ref-91"></a>[91]. N. Salman, A. Khan, A. H. Kemp, and C. J. Noakes, “[Indoor Temperature Forecast based on the Lattice Boltzmann method and Data Assimilation](https://doi.org/10.1016/j.buildenv.2021.108654),” *Building and Environment*, vol. 210, Art. no. 108654, 2022.
+<a name="ref-91"></a>[91]. N. Salman, A. Khan, A. H. Kemp, and C. J. Noakes, “[Indoor Temperature Forecast based on the Lattice Boltzmann method and Data Assimilation](https://doi.org/10.1016/j.buildenv.2021.108654),” *Building and Environment*, vol. 210, Art. no. 108654, 2022. [GitHub (MATLAB code)](https://github.com/Nav-101/LBM-DA-matlabcode)
 
 <a name="ref-92"></a>[92]. X. Yu, K. S. Skeie, M. D. Knudsen, Z. Ren, L. Imsland, and L. Georges, “[Influence of data pre-processing and sensor dynamics on grey-box models for space-heating: Analysis using field measurements](https://doi.org/10.1016/j.buildenv.2022.108832),” *Building and Environment*, vol. 212, Art. no. 108832, 2022.
 
-<a name="ref-93"></a>[93]. Z. Liu et al., “[A thermal-hydraulic coupled simulation approach for the temperature and flow rate control strategy evaluation of the multi-room radiator heating system](https://doi.org/10.1016/j.energy.2022.123347),” *Energy*, vol. 246, Art. no. 123347, 2022.
+<a name="ref-93"></a>[93]. Z. Liu, H. Zhang, Y. Wang, Z. Song, S. You, Y. Jiang, and Z. Wu, “[A thermal-hydraulic coupled simulation approach for the temperature and flow rate control strategy evaluation of the multi-room radiator heating system](https://doi.org/10.1016/j.energy.2022.123347),” *Energy*, vol. 246, Art. no. 123347, 2022.
 
 <a name="ref-94"></a>[94]. B. Dai, Y. Tong, Q. Hu, and Z. Chen, “[Characteristics of thermal stratification and its effects on HVAC energy consumption for an atrium building in south China](https://doi.org/10.1016/j.energy.2022.123425),” *Energy*, vol. 249, Art. no. 123425, 2022.
 
 <a name="ref-95"></a>[95]. Y. Ding, Y. Lyu, S. Lu, and R. Wang, “[Load shifting potential assessment of building thermal storage performance for building design](https://doi.org/10.1016/j.energy.2021.123036),” *Energy*, vol. 243, Art. no. 123036, 2022.
 
-<a name="ref-96"></a>[96]. J. Hou, H. Li, and N. Nord, “[Nonlinear model predictive control for the space heating system of a university building in Norway](https://doi.org/10.1016/j.energy.2022.124157),” *Energy*, vol. 253, Art. no. 124157, 2022.
+<a name="ref-96"></a>[96]. J. Hou, H. Li, and N. Nord, “[Nonlinear model predictive control for the space heating system of a university building in Norway](https://doi.org/10.1016/j.energy.2022.124157),” *Energy*, vol. 253, Art. no. 124157, 2022. [GitHub (models and data)](https://github.com/haoranli1988/Modelica-district-heating-optimization-MPC)
 
 <a name="ref-97"></a>[97]. X. Fan and X. Li, “[Performance comparison analysis for different single-zone natural ventilation building indoor temperature prediction method combined thermal mass](https://doi.org/10.1016/j.energy.2022.124518),” *Energy*, vol. 255, Art. no. 124518, 2022.
 
