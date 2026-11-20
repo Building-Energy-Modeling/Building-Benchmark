@@ -225,7 +225,7 @@ This section describes the measured and simulated data used in the studies. It s
 
 This section organizes the reported results into six categories. Each entry presents an outcome together with its evaluation conditions, metric and within-study comparison where available.
 
-[Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Computation time](#computation-time) · [Qualitative findings](#qualitative-findings)
+[Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Qualitative findings](#qualitative-findings)
 
 ### Prediction accuracy
 
