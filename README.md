@@ -10,10 +10,10 @@ This section summarizes the methods used to model building thermal dynamics. Eac
 
 | Method | Thermal quantity or task | Modeling idea |
 | --- | --- | --- |
-| <a href="#ref-1">[1]</a> Smart Model-Then-Control (SMC) | Zone temperatures | Train a thermal model on a surrogate of MPC<sup>1</sup> cost |
+| <a href="#ref-1">[1]</a> Smart Model-Then-Control (SMC) | Zone temperatures | Train a thermal model on a surrogate of MPC cost |
 | <a href="#ref-2">[2]</a> Personalized federated learning (DW_ada) | Building-equivalent indoor temperature | Share model parameters by building and data similarity |
 | <a href="#ref-3">[3]</a> Residential 2R2C | Indoor and envelope temperatures | Fit a two-resistance, two-capacitance model per home |
-| <a href="#ref-4">[4]</a> Single-zone PCNN<sup>2</sup> | Bedroom temperature | Combine an LSTM with physically constrained heat flows |
+| <a href="#ref-4">[4]</a> Single-zone PCNN | Bedroom temperature | Combine an LSTM with physically constrained heat flows |
 | <a href="#ref-5">[5]</a> Multi-zone X-PCNN | Temperature in each room | Train zone models separately, then couple their heat flows |
 | <a href="#ref-6">[6]</a> Context-aware Transformer | Mean indoor temperature | Train separate models for different building heights |
 | <a href="#ref-7">[7]</a> PhysCon | Room temperature and cooling load | Add 2R2C heat-balance equations to the training loss |
@@ -234,13 +234,13 @@ This section summarizes prediction errors for indoor temperatures and related th
 | Study and case | Prediction metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
 | <a href="#ref-1">[1]</a> hotel, July | Zone temperature RMSE (°C) | 0.2288 | 0.1395 · MSE-trained model |
-| <a href="#ref-2">[2]</a> six new setpoint schedules | Mean building RMSE (°C)<sup>1</sup> | 1.1861 | 1.3585 · independent local models |
+| <a href="#ref-2">[2]</a> six new setpoint schedules | Mean building RMSE (°C)| 1.1861 | 1.3585 · independent local models |
 | <a href="#ref-4">[4]</a> 1 h ahead | MAE at forecast lead (°C) | 0.31 | 0.19 · RC model |
 | <a href="#ref-4">[4]</a> 72 h ahead | MAE at forecast lead (°C) | 0.88 | 1.48 · RC model |
 | <a href="#ref-5">[5]</a> three rooms | Best-run MAE over 72 h (°C) | 1.17 | 1.27 · LSTM |
 | <a href="#ref-6">[6]</a> Piteå low-rise, 6 h | R² | 0.946 | 0.803 · pooled Transformer |
 | <a href="#ref-7">[7]</a> heavy-mass room, 5 min | Room temperature MAE (°C) | 0.25 | 0.47 · unconstrained neural network |
-| <a href="#ref-9">[9]</a> cold snap | Zone temperature RMSE (°C)<sup>2</sup> | 0.259 | 0.344 · fit on the latest three days |
+| <a href="#ref-9">[9]</a> cold snap | Zone temperature RMSE (°C) | 0.259 | 0.344 · fit on the latest three days |
 | <a href="#ref-12">[12]</a> 24-hour validation, dataset 1, configuration 2 | Average temperature NRMSE | ≈0.39 | PRBS-identified model ≈0.54 |
 | <a href="#ref-15">[15]</a> Greenhouse with crops | Temperature RMSE | 2.0 °C | 2.2 °C in the study’s no-crop case |
 | <a href="#ref-16">[16]</a> Office zones | Air-temperature RMSE | 0.23 °C | Measured zonal temperatures |
@@ -297,10 +297,10 @@ This section summarizes the operational performance of HVAC control methods. Rep
 
 | Study and case | Control outcome | Reported result | Within-study reference |
 | --- | --- | --- | --- |
-| <a href="#ref-1">[1]</a> hotel, July | Mean daily control cost<sup>1</sup> | 1,017.18 | 1,037.31 · open-loop MPC |
+| <a href="#ref-1">[1]</a> hotel, July | Mean daily control cost| 1,017.18 | 1,037.31 · open-loop MPC |
 | <a href="#ref-2">[2]</a> August price response | Mean monthly cost per building ($) | 2,418.14 | 2,572.73 · local models |
-| <a href="#ref-8">[8]</a> 61 days<sup>2</sup> | Cumulative discomfort (K·h) | 50.68 | 210.74 · fixed FullWinter MPC |
-| <a href="#ref-8">[8]</a> same run<sup>2</sup> | Energy use (kWh) | 353.89 | 328.56 · fixed FullWinter MPC |
+| <a href="#ref-8">[8]</a> 61 days | Cumulative discomfort (K·h) | 50.68 | 210.74 · fixed FullWinter MPC |
+| <a href="#ref-8">[8]</a> same run | Energy use (kWh) | 353.89 | 328.56 · fixed FullWinter MPC |
 | <a href="#ref-11">[11]</a> Simulated HVAC control | Deviation from preferred temperature | Within 0.5 °C | Occupants’ preferred temperatures |
 | <a href="#ref-13">[13]</a> Four-hour event at 0 °C outdoors | Heat-pump power reduction | Up to 90% | Setpoint adjustment against baseline operation |
 | <a href="#ref-14">[14]</a> Minneapolis, Q25 material with predictive control | Peak demand reduction | 37.84% | Baseline without phase-change material |
