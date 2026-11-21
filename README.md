@@ -8,12 +8,14 @@ This collection summarizes 100 journal articles published between 2022 and 2026 
 
 This section summarizes the methods used to model building thermal dynamics. Each entry identifies the modeling approach, the thermal quantity or control task it addresses, and the main principle behind the method.
 
+A two-resistance, two-capacitance model can describe how heat moves between the indoor air and the envelope of a home <a href="#ref-3">[3]</a>. Other studies model each room separately or train a model around the decisions an HVAC controller will make.
+
 | Method | Thermal quantity or task | Modeling idea |
 | --- | --- | --- |
-| <a href="#ref-1">[1]</a> Smart Model-Then-Control (SMC) | Zone temperatures | Train a thermal model on a surrogate of MPC cost |
+| <a href="#ref-1">[1]</a> Smart Model-Then-Control (SMC) | Zone temperatures | Train a thermal model on a surrogate of MPC<sup>1</sup> cost |
 | <a href="#ref-2">[2]</a> Personalized federated learning (DW_ada) | Building-equivalent indoor temperature | Share model parameters by building and data similarity |
 | <a href="#ref-3">[3]</a> Residential 2R2C | Indoor and envelope temperatures | Fit a two-resistance, two-capacitance model per home |
-| <a href="#ref-4">[4]</a> Single-zone PCNN | Bedroom temperature | Combine an LSTM with physically constrained heat flows |
+| <a href="#ref-4">[4]</a> Single-zone PCNN<sup>2</sup> | Bedroom temperature | Combine an LSTM with physically constrained heat flows |
 | <a href="#ref-5">[5]</a> Multi-zone X-PCNN | Temperature in each room | Train zone models separately, then couple their heat flows |
 | <a href="#ref-6">[6]</a> Context-aware Transformer | Mean indoor temperature | Train separate models for different building heights |
 | <a href="#ref-7">[7]</a> PhysCon | Room temperature and cooling load | Add 2R2C heat-balance equations to the training loss |
@@ -25,7 +27,7 @@ This section summarizes the methods used to model building thermal dynamics. Eac
 | <a href="#ref-13">[13]</a> Bottom-up heat-pump fleet model | Indoor temperature and flexible power | Aggregate dwelling heat losses, thermal storage and heat-pump operation |
 | <a href="#ref-14">[14]</a> Physics-consistent neural model and differentiable control | Zone temperature with phase-change storage | A first-law encoder–decoder represents latent heat and optimizes HVAC setpoints |
 | <a href="#ref-15">[15]</a> Greenhouse heat-balance model | Greenhouse air temperature | Fits crop evapotranspiration to sensor readings and models heat exchange with the host building |
-| <a href="#ref-16">[16]</a> Multi-branch CNN–LSTM | Zonal temperature, humidity and illuminance | Clusters office sensor locations, then combines a separate predictor branch for each feature group |
+| <a href="#ref-16">[16]</a> Multi-branch CNN–LSTM | Zonal temperature, humidity and illuminance | Cluster office sensor locations and fuse sensor inputs, then use separate branches to predict air temperature, relative humidity and illuminance |
 | <a href="#ref-17">[17]</a> Coupled BES–CFD | Spatial air temperatures under hybrid HVAC | Exchanges boundary conditions and adjusts convective heat transfer to the local airflow |
 | <a href="#ref-18">[18]</a> Transient Block–Gebhart model | Air and wall temperature · stratified cooling load | Adds envelope heat storage and transmitted solar gains to a zonal heat balance |
 | <a href="#ref-19">[19]</a> EnergyPlus internal-mass plugin | Room temperature and night ventilation | An analytical conduction model couples thermal mass to zone air |
@@ -60,12 +62,12 @@ This section summarizes the methods used to model building thermal dynamics. Eac
 | <a href="#ref-48">[48]</a> Probabilistic equivalent-thermal-parameter model | Adjustable cooling demand and comfort bounds | Historical setpoints and demand-response feedback update building-specific parameters |
 | <a href="#ref-49">[49]</a> Noise-robust recursive RC identification | Indoor temperature and cooling power | A polynomial Kalman smoother estimates noise before recursive total least squares |
 | <a href="#ref-50">[50]</a> Analytical shedding and rebound | Cooling-load changes after setpoint shifts | Solve second-order thermal dynamics for load reduction and rebound, then aggregate across buildings |
-| <a href="#ref-51">[51]</a> Decision-oriented neural ODE | Zone temperatures and HVAC cost | Fit neural differential equations jointly to prediction errors and downstream operating costs |
+| <a href="#ref-51">[51]</a> Decision-oriented neural ODE | Building-equivalent indoor temperature and HVAC cost | Fit neural differential equations jointly to prediction errors and downstream operating costs |
 | <a href="#ref-52">[52]</a> Latent-state optimization | Multi-zone temperatures and control actions | Train an autoencoder with a state-space model and optimize in the reduced space |
 | <a href="#ref-53">[53]</a> Hygrothermal regulation model | Indoor humidity, temperature and HVAC power | Couple heat and moisture dynamics to equipment limits to estimate available regulation |
 | <a href="#ref-54">[54]</a> HVAC–microclimate coupling | Urban canopy and envelope temperatures | Model heat exchange among AC units, façades and outdoor air when allocating response capacity |
 | <a href="#ref-55">[55]</a> RC network with boundary-based clustering | Hourly heating and cooling loads | Group elements with similar boundaries and represent shared walls with controlled sources |
-| <a href="#ref-56">[56]</a> Piecewise-linear virtual storage aggregation | Zone temperatures and fleet flexibility | Fit building-specific thermal responses, aggregate feasible power and disaggregate schedules |
+| <a href="#ref-56">[56]</a> Piecewise-linear virtual storage aggregation | Equivalent indoor temperature for each building and flexibility of the building fleet | Fit building-specific thermal responses, aggregate feasible power and disaggregate schedules |
 | <a href="#ref-57">[57]</a> Economic MPC with RC and neural models | Zone temperature and HVAC cost | Solve RC-MPC by linear programming and ANN-MPC by projected stochastic gradient descent |
 | <a href="#ref-58">[58]</a> Deep Q-network for multiple VAV boxes | Zone temperature and HVAC energy | Use a joint multi-zone action and penalize comfort violations and equipment cycling |
 | <a href="#ref-59">[59]</a> Neural differential equations and MPC | Temperature and HVAC power | Learn continuous-time dynamics from meter data for temperature-setpoint planning |
@@ -91,7 +93,7 @@ This section summarizes the methods used to model building thermal dynamics. Eac
 | <a href="#ref-79">[79]</a> Radiator-network digital twin | Room and supply-water temperatures | Couple EnergyPlus and MATLAB and feed predicted room temperature back to supply control |
 | <a href="#ref-80">[80]</a> Price-responsive MPC for floor heating | Heating schedule and indoor temperature | A thermal RC state-space model coordinates slab storage with prices and rooftop PV |
 | <a href="#ref-81">[81]</a> Two-level water- and air-loop control | Zone, wall and water temperatures | Set water-side operation every five minutes and adjust fans for fast regulation |
-| <a href="#ref-82">[82]</a> Two-step 2R1C identification | Envelope conductance, ventilation and heat capacity | Separate parameter groups using enthalpy differences, least squares and an analytic solution |
+| <a href="#ref-82">[82]</a> Two-step 2R1C identification | Envelope conductance, ventilation and zone air heat capacity | Separate parameter groups using enthalpy differences, least squares and an analytic solution |
 | <a href="#ref-83">[83]</a> Second-order residential RC model | Air and interior wall-surface temperatures | Estimate two-node model parameters by least squares and optimization search |
 | <a href="#ref-84">[84]</a> RC identification with alternative occupancy inputs | Room temperature and occupant heat gains | Vary RC order and occupancy proxies, then test predictive and control performance |
 | <a href="#ref-85">[85]</a> Continuous-time stochastic thermal model and LQG control | Temperature under solar disturbances | Embed stochastic disturbance forecasts in the controller |
@@ -111,21 +113,24 @@ This section summarizes the methods used to model building thermal dynamics. Eac
 | <a href="#ref-99">[99]</a> Semidefinite flexibility optimization | Indoor and wall temperatures | Couple an RC building model to HVAC equipment and solve for feasible peak reductions |
 | <a href="#ref-100">[100]</a> Aggregate thermal regression | Building or cluster temperature | Map zone states to an aggregate state and fit a constrained regression by block updates |
 
+<sub>¹ MPC = model predictive control.</sub>
 
+<sub>² PCNN = physically consistent neural network.</sub>
 
 ## Datasets
 
 This section describes the measured and simulated data used in the studies. It summarizes the building type, data source and evaluation setup, including sampling intervals, training and test periods, and forecast horizons where reported.
 
+The Swiss NEST apartment provides measured bedroom temperatures <a href="#ref-4">[4]</a>, while the U.S. Department of Energy prototypes in <a href="#ref-2">[2]</a> provide simulated trajectories for 32 buildings.
 
 | Study | Building data | Evaluation setup |
 | --- | --- | --- |
 | <a href="#ref-1">[1]</a> SMC | DOE 22-zone hotel · EnergyPlus · 15 min | June training, July test · 8 h control horizon |
 | <a href="#ref-2">[2]</a> DW_ada | 32 DOE buildings, 8 types · EnergyPlus · 15 min | June–July training, August test on the same buildings |
-| <a href="#ref-3">[3]</a> Residential 2R2C | 220 Dutch homes monitored · hourly measurements | 187 models validated on a separate 10-day period |
+| <a href="#ref-3">[3]</a> Residential 2R2C | 220 Dutch homes · 1-min measurements resampled to 10 min · hourly inputs for model fitting | 187 models validated on a separate 10-day period |
 | <a href="#ref-4">[4]</a> Single-zone PCNN | Swiss NEST/UMAR apartment · one bedroom · 15 min | Nearly 2,000 three-day validation windows |
 | <a href="#ref-5">[5]</a> X-PCNN | Swiss NEST/UMAR apartment · two bedrooms and a living room · 15 min | Over 750 three-day validation windows with known inputs |
-| <a href="#ref-6">[6]</a> Context-aware Transformer | 18 Swedish training buildings · hourly measurements | Piteå low-rise test subset · 6 h forecast |
+| <a href="#ref-6">[6]</a> Context-aware Transformer | 18 Swedish training buildings · 15-min measurements resampled to hourly inputs | Piteå low-rise test subset · 6 h forecast |
 | <a href="#ref-7">[7]</a> PhysCon | Two experimental rooms · heavy and light thermal mass | Held-out day · 5 min ahead |
 | <a href="#ref-8">[8]</a> Fully adaptive MPC | Oslo house · IDA ICE–MATLAB simulation | November–December · 61 days · 15 min control interval |
 | <a href="#ref-9">[9]</a> Weather-adaptive 4R3C | Ningbo office · simulator calibrated on 5 min measurements | Four-day simulated cold snap |
@@ -168,7 +173,7 @@ This section describes the measured and simulated data used in the studies. It s
 | <a href="#ref-46">[46]</a> Chance-constrained stochastic MPC | Office building in Xi’an, China · field control experiment | On/off, deterministic MPC and stochastic MPC comparisons |
 | <a href="#ref-47">[47]</a> Humidity-enhanced RC mapping | Cooling-curtailment measurements from a large public building | Compare measured temperatures during demand response with two RC models |
 | <a href="#ref-48">[48]</a> Probabilistic equivalent-thermal-parameter model | Shenzhen public-building temperature and setpoint records plus simulated cases | Evaluate building-specific comfort bounds and available capacity at different confidence levels |
-| <a href="#ref-49">[49]</a> Noise-robust recursive RC identification | Measured temperatures and cooling power in a 354 m² office in Foshan, China | Test a second-order RC model with noisy measurements |
+| <a href="#ref-49">[49]</a> Noise-robust recursive RC identification | 354 m² office in Foshan, China · measured temperatures and cooling power calculated by the variable refrigerant flow (VRF) system | Test a second-order RC model with noisy measurements |
 | <a href="#ref-50">[50]</a> Analytical shedding and rebound | Numerical building and aggregation cases | Vary regulation duration and permitted indoor temperature offset |
 | <a href="#ref-51">[51]</a> Decision-oriented neural ODE | EnergyPlus · DOE house, mall, office, hotel and apartment | 15 min · train June–July, test August · up to 90 zones |
 | <a href="#ref-52">[52]</a> Latent-state optimization | EnergyPlus · DOE 90-zone apartment and augmented 1,080-zone case | Train June–July, test August |
@@ -178,8 +183,8 @@ This section describes the measured and simulated data used in the studies. It s
 | <a href="#ref-56">[56]</a> Piecewise-linear virtual storage aggregation | 80 EnergyPlus buildings from four US DOE archetypes | Hourly, July 1–31 · day-ahead fleet dispatch and building-level allocation |
 | <a href="#ref-57">[57]</a> Economic MPC with RC and neural models | BOPTEST simulated single-zone dwelling | Identical benchmark for the two MPC designs |
 | <a href="#ref-58">[58]</a> Deep Q-network for multiple VAV boxes | OpenStudio simulation of a Greenville, South Carolina open-plan office | Six zones sharing open air boundaries |
-| <a href="#ref-59">[59]</a> Neural differential equations and MPC | Two EnergyPlus residential prototypes and five measured eastern Canadian commercial buildings | Irregular and missing samples, demand-response events |
-| <a href="#ref-60">[60]</a> PDE-constrained learning and control | Numerical tests and measurements from UC Berkeley | Compare ventilation policies under comfort and air-quality constraints |
+| <a href="#ref-59">[59]</a> Neural differential equations and MPC | Two EnergyPlus residential prototypes and measurements from five commercial buildings in eastern Canada | Two-hour temperature forecasts on commercial building data with irregular or missing samples · winter demand-response simulation in a cold-climate residential prototype |
+| <a href="#ref-60">[60]</a> PDE-constrained learning and control | UC Berkeley CO₂ measurements and numerical simulations | Use measurements to model the spatial CO₂ field and simulations to compare ventilation policies under comfort and air-quality constraints |
 | <a href="#ref-61">[61]</a> Coupled dwelling and urban climate model | Renovated multifamily dwelling, Lyon · summer 2022 field measurements | Calibrated model subjected to future urban heatwave scenarios |
 | <a href="#ref-62">[62]</a> Four-storage-unit grey-box model | Heating buildings connected to one secondary network with mean indoor-temperature records | Fit the lumped heat-storage parameters and evaluate predicted indoor temperature |
 | <a href="#ref-63">[63]</a> Multi-objective room MPC | 15-minute measurements from an office in Espoo, Finland and a calibrated CARNOT room model | Evaluate simulated closed-loop control at a 15-minute interval with a 90-minute horizon |
@@ -225,22 +230,26 @@ This section describes the measured and simulated data used in the studies. It s
 
 This section organizes the reported results into six categories. Each entry presents an outcome together with its evaluation conditions, metric and within-study comparison where available.
 
-[Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Qualitative findings](#qualitative-findings)
+Forecast accuracy and control cost can favor different models. In the hotel case <a href="#ref-1">[1]</a>, the model trained for control had a higher temperature error than the model trained on prediction error, yet its controller achieved a lower daily cost than the open-loop comparison. A dash marks a result presented without a separate comparator.
+
+[Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Computation time](#computation-time) · [Qualitative findings](#qualitative-findings)
 
 ### Prediction accuracy
 
 This section summarizes prediction errors for indoor temperatures and related thermal quantities. Results are listed with the forecast horizon, error metric and comparison method where reported.
 
+The forecast horizon matters even for a single room. In the Swiss bedroom study <a href="#ref-4">[4]</a>, the resistance–capacitance model had the smaller error one hour ahead, while the physically consistent neural network had the smaller error three days ahead.
+
 | Study and case | Prediction metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
 | <a href="#ref-1">[1]</a> hotel, July | Zone temperature RMSE (°C) | 0.2288 | 0.1395 · MSE-trained model |
-| <a href="#ref-2">[2]</a> six new setpoint schedules | Mean building RMSE (°C)| 1.1861 | 1.3585 · independent local models |
+| <a href="#ref-2">[2]</a> six new setpoint schedules | Mean building RMSE (°C)<sup>1</sup> | 1.1861 | 1.3585 · independent local models |
 | <a href="#ref-4">[4]</a> 1 h ahead | MAE at forecast lead (°C) | 0.31 | 0.19 · RC model |
 | <a href="#ref-4">[4]</a> 72 h ahead | MAE at forecast lead (°C) | 0.88 | 1.48 · RC model |
 | <a href="#ref-5">[5]</a> three rooms | Best-run MAE over 72 h (°C) | 1.17 | 1.27 · LSTM |
 | <a href="#ref-6">[6]</a> Piteå low-rise, 6 h | R² | 0.946 | 0.803 · pooled Transformer |
 | <a href="#ref-7">[7]</a> heavy-mass room, 5 min | Room temperature MAE (°C) | 0.25 | 0.47 · unconstrained neural network |
-| <a href="#ref-9">[9]</a> cold snap | Zone temperature RMSE (°C) | 0.259 | 0.344 · fit on the latest three days |
+| <a href="#ref-9">[9]</a> cold snap | Zone temperature RMSE (°C)<sup>2</sup> | 0.259 | 0.344 · fit on the latest three days |
 | <a href="#ref-12">[12]</a> 24-hour validation, dataset 1, configuration 2 | Average temperature NRMSE | ≈0.39 | PRBS-identified model ≈0.54 |
 | <a href="#ref-15">[15]</a> Greenhouse with crops | Temperature RMSE | 2.0 °C | 2.2 °C in the study’s no-crop case |
 | <a href="#ref-16">[16]</a> Office zones | Air-temperature RMSE | 0.23 °C | Measured zonal temperatures |
@@ -255,24 +264,28 @@ This section summarizes prediction errors for indoor temperatures and related th
 | <a href="#ref-45">[45]</a> Multi-step indoor temperature | RMSE | 0.94 °C | 1.27 °C · neural network / 1.91 °C · standalone 2R2C |
 | <a href="#ref-47">[47]</a> Public-building cooling curtailment | Indoor-temperature RMSE | 0.118 °C | 0.737 °C with the conventional RC model |
 | <a href="#ref-49">[49]</a> Noisy office measurements | Indoor-temperature MAE | 0.48 °C | Recorded indoor temperatures |
-| <a href="#ref-51">[51]</a> 67-zone hotel · test period | Zone temperature RMSE (°C) | 0.3717 | 0.3779 · conventional model-then-optimize |
+| <a href="#ref-51">[51]</a> 67-zone hotel · test period | RMSE of indoor temperature weighted by zone air mass (°C) | 0.3717 | 0.3779 · conventional model-then-optimize |
 | <a href="#ref-52">[52]</a> 1,080-zone case · test set | Temperature RMSE (°C) | 0.3520 | 0.5605 · identification in original variables |
 | <a href="#ref-62">[62]</a> Heating-network buildings | Mean absolute indoor-temperature error | 0.1 °C | Mean indoor air temperature in the case study |
 | <a href="#ref-66">[66]</a> Seven-home aggregate · test set | Aggregate-state RMSE (°C) | 0.2944 | 0.2741 · non-private fit |
 | <a href="#ref-75">[75]</a> Multi-zone office · 10 min ahead | Forecasts within 0.5 °C of measurements | &gt;80% in every test set | Both MITP-Net fusion methods |
 | <a href="#ref-76">[76]</a> Workplaces, next 24 h | Average air-temperature MAE | 0.87 K | Measured indoor air temperatures |
-| <a href="#ref-83">[83]</a> Aug 13–24, 2020, after transition-season identification | 24-hour air-temperature RMSE | 0.62 °C | Measured room air temperature |
-| <a href="#ref-87">[87]</a> Room-temperature prediction experiment | Reported prediction error | Below 0.25 °C | Both physics-informed architectures |
+| <a href="#ref-83">[83]</a> Aug 13–24, 2020 · parameters identified in the transition season | 24-hour air-temperature RMSE | 0.62 °C · optimal-search identification | 0.65 °C · least-squares identification on the same test period |
+| <a href="#ref-87">[87]</a> Simulated single-family home | Room-temperature MAE | PhysNet 0.226 °C · PhysReg MLP 0.197 °C | 0.209 °C · standard MLP |
 | <a href="#ref-88">[88]</a> Monitored room | R² | &gt;0.9 | Measured room temperatures |
 | <a href="#ref-97">[97]</a> Naturally ventilated test buildings | Maximum indoor-temperature error | About 1.5 °C | Measured temperatures |
 | <a href="#ref-100">[100]</a> Multi-zone building | Aggregate-state RMSE (°C) | &lt;0.72 | — |
 | <a href="#ref-100">[100]</a> Building cluster | Aggregate-state RMSE (°C) | &lt;0.32 | — |
 
+<sub>¹ RMSE was computed per building, then averaged across buildings and setpoint schedules.</sub>
 
+<sub>² Both fits used three training days. They differed in how those days were selected.</sub>
 
 ### Model validation
 
 This section summarizes how the studies validated their thermal models against measurements or reference simulations. Each entry identifies the quantity evaluated, the validation metric and the reference used.
+
+What counts as a reference depends on the thermal quantity. The internal-mass study <a href="#ref-10">[10]</a> used sensors embedded in the material, while studies of room temperature fields also used detailed airflow simulations.
 
 | Study and case | Validation metric | Reported result | Within-study reference |
 | --- | --- | --- | --- |
@@ -280,13 +293,13 @@ This section summarizes how the studies validated their thermal models against m
 | <a href="#ref-10">[10]</a> Test-room thermal mass | Internal-mass temperature RMSE | 0.9 °C | Embedded temperature sensors |
 | <a href="#ref-17">[17]</a> Both seasons, all locations | Temperature CV(RMSE) | &lt;2% | Full-scale measurements |
 | <a href="#ref-18">[18]</a> Seven operating cases in two large buildings | Air-temperature MAE | 1.1 °C in each set | Measured temperatures |
-| <a href="#ref-36">[36]</a> Hospital temperature sensors | Reported mean temperature error | 0.4 °C | Measured temperatures |
+| <a href="#ref-36">[36]</a> Hospital temperature sensors | Mean of the individual sensors’ temperature MAEs | 0.40 °C | Measured temperatures |
 | <a href="#ref-41">[41]</a> Temperature-field reconstruction | RMSE reduction | About 69.8% | CFD without assimilation |
 | <a href="#ref-42">[42]</a> Dynamic solar-gain cases | Temperature-field RMSE | 0.33 °C | Reference CFD solution |
 | <a href="#ref-43">[43]</a> Transient office field | Temperature-field MAE | 0.27 °C | CFD temperature field |
 | <a href="#ref-55">[55]</a> ASHRAE 140 Case 600 | Relative error in reported load results | Within 7.5% | EnergyPlus |
 | <a href="#ref-69">[69]</a> PCM envelope configurations | Mean relative error | 7.7% | Numerical enthalpy model |
-| <a href="#ref-82">[82]</a> Test room heat capacity | Relative identification error | 3.31% | Experimental reference |
+| <a href="#ref-82">[82]</a> Air heat capacity in the test room | Relative identification error | 3.31% | Reference value for zone air heat capacity (derivation unverified) |
 | <a href="#ref-89">[89]</a> School temperature calibration | Temperature RMSE | 0.3 °C | Measured hourly temperatures |
 | <a href="#ref-98">[98]</a> Ventilated-floor test room | Upper floor-surface temperature MAPE | 3.3% | On-site measurements |
 | <a href="#ref-98">[98]</a> Ventilated-floor test room | Indoor-air temperature MAPE | 3.8% | On-site measurements |
@@ -295,12 +308,14 @@ This section summarizes how the studies validated their thermal models against m
 
 This section summarizes the operational performance of HVAC control methods. Reported outcomes include energy use, operating cost, thermal comfort and demand response performance under the conditions evaluated in each study.
 
+A controller can improve comfort while using more energy. Over the 61-day Oslo house simulation <a href="#ref-8">[8]</a>, adaptive control reduced accumulated discomfort and increased electricity use relative to the fixed controller.
+
 | Study and case | Control outcome | Reported result | Within-study reference |
 | --- | --- | --- | --- |
-| <a href="#ref-1">[1]</a> hotel, July | Mean daily control cost| 1,017.18 | 1,037.31 · open-loop MPC |
+| <a href="#ref-1">[1]</a> hotel, July | Mean daily control cost<sup>1</sup> | 1,017.18 | 1,037.31 · open-loop MPC |
 | <a href="#ref-2">[2]</a> August price response | Mean monthly cost per building ($) | 2,418.14 | 2,572.73 · local models |
-| <a href="#ref-8">[8]</a> 61 days | Cumulative discomfort (K·h) | 50.68 | 210.74 · fixed FullWinter MPC |
-| <a href="#ref-8">[8]</a> same run | Energy use (kWh) | 353.89 | 328.56 · fixed FullWinter MPC |
+| <a href="#ref-8">[8]</a> 61 days<sup>2</sup> | Cumulative discomfort (K·h) | 50.68 | 210.74 · fixed FullWinter MPC |
+| <a href="#ref-8">[8]</a> same run<sup>2</sup> | Energy use (kWh) | 353.89 | 328.56 · fixed FullWinter MPC |
 | <a href="#ref-11">[11]</a> Simulated HVAC control | Deviation from preferred temperature | Within 0.5 °C | Occupants’ preferred temperatures |
 | <a href="#ref-13">[13]</a> Four-hour event at 0 °C outdoors | Heat-pump power reduction | Up to 90% | Setpoint adjustment against baseline operation |
 | <a href="#ref-14">[14]</a> Minneapolis, Q25 material with predictive control | Peak demand reduction | 37.84% | Baseline without phase-change material |
@@ -308,15 +323,15 @@ This section summarizes the operational performance of HVAC control methods. Rep
 | <a href="#ref-23">[23]</a> Seven-day field deployment | Heating-energy savings | 15.9% | Conventional on/off controller, weather-normalized |
 | <a href="#ref-26">[26]</a> Five-zone building · one-day commitment | Mean electricity cost ($) | 61.08 | 57.71 · optimal RC schedule |
 | <a href="#ref-29">[29]</a> Synthetic and measured-input cases | Cumulative comfort violation | 26–56% lower | Online convex controllers without thermal structure |
-| <a href="#ref-35">[35]</a> Modular heating controller | Average energy saving | 26% | Rule-based control |
+| <a href="#ref-35">[35]</a> Simulated transfer to bedroom 274 and living room 273 | Heating energy saving | ≈26% on average (32% in the bedroom and 19% in the living room) | Rule-based control |
 | <a href="#ref-38">[38]</a> Fourth model update, test year | Temperature outside comfort band | 699.0 °C·min | 6,143.5 °C·min with on/off control |
 | <a href="#ref-46">[46]</a> Office field experiment | Energy use | 39.1% lower | On/off control |
 | <a href="#ref-46">[46]</a> Same office field experiment | Energy use | 33.3% lower | Deterministic MPC |
 | <a href="#ref-51">[51]</a> 67-zone hotel · test period | Control cost | 0.66% lower | Conventional model-then-optimize |
 | <a href="#ref-57">[57]</a> Single-zone dwelling, both MPC approaches | Energy-cost saving | 17–34% | Rule-based controller |
 | <a href="#ref-58">[58]</a> Six-zone open office | HVAC energy reduction | 37% | Existing building HVAC schedule |
-| <a href="#ref-59">[59]</a> Controlled differential equation, 8% power slack | Demand-response events satisfied | 18 of 26 (4 infeasible) | 8 of 26 with no slack |
-| <a href="#ref-60">[60]</a> Optimized supply airflow and temperature | Energy reduction | 7.9% | MPC using ordinary differential equations |
+| <a href="#ref-59">[59]</a> Cold-climate EnergyPlus home, winter · controlled differential equation with 8% power slack | Demand-response events satisfied | 18 of 26 (4 infeasible) | 8 of 26 with no slack |
+| <a href="#ref-60">[60]</a> Simulated control of supply airflow and temperature | Energy reduction | 7.9% | MPC using ordinary differential equations |
 | <a href="#ref-63">[63]</a> Radiator-heated office, co-simulation | Heating-energy reduction | 2.8% | PID control |
 | <a href="#ref-68">[68]</a> 15% random thermal-parameter error | Achieved dispatch objective | 98.4% of ideal | Ideal dispatch result |
 | <a href="#ref-70">[70]</a> Carpenter Hall simulation | Energy reduction | 8.9% | LSTM-based MPC |
@@ -332,18 +347,23 @@ This section summarizes the operational performance of HVAC control methods. Rep
 | <a href="#ref-95">[95]</a> Precooling, four Chinese climate zones | Office-hours cooling-load reduction | 20–45% | Cases without advance cooling |
 | <a href="#ref-96">[96]</a> Norwegian university, simulation | Peak heating-load reduction | 8.8% | Existing rule-based control |
 
+<sub>¹ The daily objective includes electricity charges and a thermal comfort penalty.</sub>
+
+<sub>² Both outcomes use the same comfort penalty weight of 10⁸.</sub>
 
 ### Thermal response and flexibility
 
 This section summarizes how buildings respond to changes in heating, cooling and control settings. Reported quantities include temperature changes, available regulation capacity, peak demand reduction and the duration of load adjustments.
 
+A building’s available flexibility changes as it heats up or cools down. One study tracks the reserve capacity available during a one-hour demand response event <a href="#ref-53">[53]</a>, while another estimates how long heating can be curtailed <a href="#ref-25">[25]</a>.
+
 | Study and case | Reported quantity | Reported result | Within-study reference |
 | --- | --- | --- | --- |
-| <a href="#ref-19">[19]</a> September, 21 working days | Mean delay of peak cooling power | 0.8 h | With nighttime cooling of internal mass |
-| <a href="#ref-20">[20]</a> Sensitivity of passive storage | Interaction share of each key factor’s total effect | &gt;20% | Across the key design and operating factors studied |
-| <a href="#ref-25">[25]</a> Heating-supply curtailment scenarios | Longest continuous downward flexibility | 22 h | Maximum across the simulated conditions |
+| <a href="#ref-19">[19]</a> Nighttime cooling of internal thermal mass · 21 working days in September | Mean delay of peak cooling power | 0.8 h | Comparison scenario pending verification |
+| <a href="#ref-20">[20]</a> Passive storage · key design and operating factors | Share of each factor’s total effect attributable to interactions | &gt;20% for each factor | — |
+| <a href="#ref-25">[25]</a> Simulated heating-supply curtailments | Longest continuous period of downward flexibility across scenarios | 22 h | — |
 | <a href="#ref-27">[27]</a> Most simulated demand response scenarios | Estimated demand response potential | More than 2× | Model omitting chilled-water storage |
-| <a href="#ref-53">[53]</a> Noon to 13:00 · 80% reserve deployment | Available regulation capacity | ≈10 kW after deployment | ≈55 kW before deployment |
+| <a href="#ref-53">[53]</a> 12:00–13:00 · 80% reserve deployment | Available regulation capacity | ≈10 kW during deployment | ≈55 kW before deployment |
 | <a href="#ref-54">[54]</a> High-density Macau block | Increase in maximum canopy temperature | 2.96 °C | Case without AC–microclimate interaction |
 | <a href="#ref-64">[64]</a> Five-zone allocation · 50 kW demand response | Iterations for weighted consensus | Within 100 | The aggregate allocation remained at 50 kW |
 | <a href="#ref-67">[67]</a> Comfort limits each tightened by 1 °C | Regulation reserve capacity | ≈21% higher | Base-case temperature bounds |
@@ -351,11 +371,25 @@ This section summarizes how buildings respond to changes in heating, cooling and
 | <a href="#ref-78">[78]</a> Best simulated two-layer envelope | Inner / outer thickness at longest annual comfort duration | 13.3 / 26.7 mm | 40 mm total phase-change material thickness |
 | <a href="#ref-94">[94]</a> Adjacent air-conditioned zones | Calculated HVAC load per floor area | 115–146 W/m² | Model includes stratification and CFD-derived convection coefficients |
 
+### Computation time
+
+This section summarizes the time required for model training, online optimization and flexibility calculations. Each result identifies the operation timed and includes the comparison method and hardware specifications where reported.
+
+Offline training and online control run on different timescales. The federated study <a href="#ref-2">[2]</a> timed training across 32 buildings, while the hotel study <a href="#ref-1">[1]</a> timed an individual optimization solve.
+
+| Study and case | Timed operation | Reported result | Within-study reference |
+| --- | --- | --- | --- |
+| <a href="#ref-1">[1]</a> 22-zone hotel<sup>1</sup> | Online MPC solve · 8 h horizon | 1.09 s | 0.93 s · open-loop MPC |
+| <a href="#ref-2">[2]</a> 32 buildings<sup>1</sup> | Offline federated training | 414.04 min | 574.31 min · weights updated every round |
+| <a href="#ref-99">[99]</a> Single-zone flexibility calculation | Mean solver runtime | 0.0204 s · semidefinite programming | 0.2008 s · IPOPT |
+
+<sub>¹ These two studies used a 3.40 GHz Intel Xeon CPU and 16 GB of RAM.</sub>
 
 ### Qualitative findings
 
 This section summarizes reported findings on model behavior, control feasibility and sensitivity to operating conditions. Each entry identifies the evaluation case and the observed effect.
 
+Some experiments reveal when a modeling choice helps or hurts. In the room airflow study <a href="#ref-91">[91]</a>, four sensors gave a temperature-field error similar to the five-sensor layout, and one poorly placed sensor could worsen the estimate.
 
 | Study and case | Quantity examined | Reported result | Within-study reference |
 | --- | --- | --- | --- |
