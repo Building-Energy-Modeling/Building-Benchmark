@@ -135,7 +135,7 @@ This section describes the measured and simulated data used in the studies. It s
 | <a href="#ref-13">[13]</a> Bottom-up heat-pump fleet model | Swiss monitoring of heat loss, cooldowns and 243 residential heat pumps | Simulated curtailment at different outdoor temperatures |
 | <a href="#ref-14">[14]</a> Physics-consistent neural model and differentiable control | EnergyPlus five-zone office with bio-based phase-change materials | Six US climates, typical summer and extreme heat |
 | <a href="#ref-15">[15]</a> Greenhouse heat-balance model | UPC rooftop greenhouse, Spain · measured with and without crops | 70 combinations of training and validation data |
-| <a href="#ref-16">[16]</a> Multi-branch CNN–LSTM | Office sensor readings and door, window and HVAC operating states | Spatially clustered office zones |
+| <a href="#ref-16">[16]</a> Multi-branch CNN–LSTM | Office sensor readings and daylight curtain, window and HVAC operating states | Spatially clustered office zones |
 | <a href="#ref-17">[17]</a> Coupled BES–CFD | Full-scale open-plan office with radiant and convective HVAC · measured temperatures | Heating and cooling seasons · multiple measurement locations |
 | <a href="#ref-18">[18]</a> Transient Block–Gebhart model | Two large-space buildings · measured air and wall temperatures and cooling loads | Seven operating cases in two buildings |
 | <a href="#ref-19">[19]</a> EnergyPlus internal-mass plugin | Published field measurements of zone air temperature and EnergyPlus simulations | Validate on site time series and compare night cooling across months |
@@ -225,7 +225,7 @@ This section describes the measured and simulated data used in the studies. It s
 
 This section organizes the reported results into six categories. Each entry presents an outcome together with its evaluation conditions, metric and within-study comparison where available.
 
-[Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Computation time](#computation-time) · [Qualitative findings](#qualitative-findings)
+[Prediction accuracy](#prediction-accuracy) · [Model validation](#model-validation) · [Control performance](#control-performance) · [Thermal response and flexibility](#thermal-response-and-flexibility) · [Qualitative findings](#qualitative-findings)
 
 ### Prediction accuracy
 
@@ -351,16 +351,6 @@ This section summarizes how buildings respond to changes in heating, cooling and
 | <a href="#ref-78">[78]</a> Best simulated two-layer envelope | Inner / outer thickness at longest annual comfort duration | 13.3 / 26.7 mm | 40 mm total phase-change material thickness |
 | <a href="#ref-94">[94]</a> Adjacent air-conditioned zones | Calculated HVAC load per floor area | 115–146 W/m² | Model includes stratification and CFD-derived convection coefficients |
 
-
-### Computation time
-
-| Study and case | Timed operation | Reported result | Within-study reference |
-| --- | --- | --- | --- |
-| <a href="#ref-1">[1]</a> 22-zone hotel<sup>1</sup> | Online MPC solve · 8 h horizon | 1.09 s | 0.93 s · open-loop MPC |
-| <a href="#ref-2">[2]</a> 32 buildings<sup>1</sup> | Offline federated training | 414.04 min | 574.31 min · weights updated every round |
-| <a href="#ref-99">[99]</a> Single-zone flexibility calculation | Mean solver runtime | 0.0204 s · semidefinite programming | 0.2008 s · IPOPT |
-
-<sub>¹ These two studies used a 3.40 GHz Intel Xeon CPU and 16 GB of RAM.</sub>
 
 ### Qualitative findings
 
